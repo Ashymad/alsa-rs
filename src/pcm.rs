@@ -802,6 +802,10 @@ impl<'a> SwParams<'a> {
         acheck!(snd_pcm_sw_params_get_tstamp_mode(self.0, &mut v)).map(|_| v != 0)
     }
 
+    pub fn set_tstamp_type(&self) -> Result<()> {
+        acheck!(snd_pcm_sw_params_set_tstamp_type((self.1).0, self.0, alsa::SND_PCM_TSTAMP_TYPE_GETTIMEOFDAY)).map(|_| ())
+    }
+
     pub fn dump(&self, o: &mut Output) -> Result<()> {
         acheck!(snd_pcm_sw_params_dump(self.0, super::io::output_handle(o))).map(|_| ())
     }
