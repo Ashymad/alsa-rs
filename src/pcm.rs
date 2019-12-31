@@ -850,6 +850,12 @@ impl Status {
         h
     }
 
+    pub fn get_driver_htstamp(&self) -> timespec {
+        let mut h = timespec {tv_sec: 0, tv_nsec: 0};
+        unsafe { alsa::snd_pcm_status_get_driver_htstamp(self.ptr(), &mut h) };
+        h
+    }
+
     pub fn get_state(&self) -> State { State::from_c_int(
         unsafe { alsa::snd_pcm_status_get_state(self.ptr()) } as c_int, "snd_pcm_status_get_state").unwrap() }
 
